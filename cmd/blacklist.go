@@ -68,6 +68,11 @@ Examples:
 			}
 			client.RequireKey(cfg)
 
+			defaultLimit := limit == 0 && !plaintext && !jsonOutput
+			if defaultLimit {
+				limit = 10
+			}
+
 			params := map[string]string{}
 			if scoreMin > 0 {
 				params["scoreMinimum"] = strconv.Itoa(scoreMin)
@@ -134,6 +139,10 @@ Examples:
 
 			printBlacklistResult(&resp)
 			output.PrintRateLimit(headers, "ratelimit")
+			if defaultLimit && resp.Meta.Count >= 10 {
+				fmt.Println()
+				output.Dim.Println("Showing first 10 results. Use --limit <amount> to show more.")
+			}
 			return nil
 		},
 	}

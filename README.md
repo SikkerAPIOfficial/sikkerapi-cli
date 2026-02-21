@@ -1,5 +1,9 @@
 # sikker
 
+[![Release](https://img.shields.io/github/v/release/sikkerapi/sikker-cli)](https://github.com/sikkerapi/sikker-cli/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/sikkerapi/sikker-cli)](https://goreportcard.com/report/github.com/sikkerapi/sikker-cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 The official CLI for [SikkerAPI](https://sikkerapi.com) — IP reputation, blacklists, abuse reports, and TAXII/STIX feeds from your terminal.
 
 **[Full documentation](https://sikkerapi.com/docs/cli)**

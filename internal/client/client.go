@@ -30,7 +30,7 @@ func New(cfg *config.Config) *Client {
 	return &Client{
 		cfg: cfg,
 		http: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout: 60 * time.Second,
 		},
 	}
 }

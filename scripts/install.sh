@@ -28,9 +28,9 @@ main() {
         BINARY="sikker.exe"
     fi
 
-    LATEST=$(curl -sI "https://github.com/$REPO/releases/latest" | grep -i "^location:" | sed 's/.*tag\///' | tr -d '\r\n')
+    LATEST=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | grep '"tag_name"' | sed 's/.*: "//;s/".*//')
     if [ -z "$LATEST" ]; then
-        echo "Failed to determine latest version."
+        echo "Failed to determine latest version. Check https://github.com/$REPO/releases"
         exit 1
     fi
 

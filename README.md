@@ -22,6 +22,17 @@ brew install sikkerapi/tap/sikker
 go install github.com/sikkerapi/sikker-cli@latest
 ```
 
+> **Note:** `go install` names the binary `sikker-cli` (after the module name).
+> To use it as `sikker`, create an alias or symlink:
+>
+> ```sh
+> # Symlink (permanent)
+> ln -s $(go env GOPATH)/bin/sikker-cli $(go env GOPATH)/bin/sikker
+>
+> # Or add a shell alias to your ~/.bashrc or ~/.zshrc
+> alias sikker='sikker-cli'
+> ```
+
 ### GitHub Releases
 
 Download pre-built binaries from [Releases](https://github.com/sikkerapi/sikker-cli/releases).

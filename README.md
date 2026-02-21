@@ -2,6 +2,8 @@
 
 The official CLI for [SikkerAPI](https://sikkerapi.com) — IP reputation, blacklists, abuse reports, and TAXII/STIX feeds from your terminal.
 
+**[Full documentation](https://sikkerapi.com/docs/cli)**
+
 ## Install
 
 ### Quick install (Linux / macOS)

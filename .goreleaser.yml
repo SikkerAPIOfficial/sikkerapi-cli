@@ -39,6 +39,7 @@ brews:
   - repository:
       owner: sikkerapi
       name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
     homepage: "https://sikkerapi.com"
     description: "CLI for SikkerAPI — IP reputation, blacklists, abuse reports, and TAXII feeds"
     license: "MIT"

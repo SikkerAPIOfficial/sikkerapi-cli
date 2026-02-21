@@ -10,6 +10,12 @@ The official CLI for [SikkerAPI](https://sikkerapi.com) — IP reputation, black
 curl -sSL https://raw.githubusercontent.com/sikkerapi/sikker-cli/main/scripts/install.sh | sh
 ```
 
+### Homebrew (macOS / Linux)
+
+```sh
+brew install sikkerapi/tap/sikker
+```
+
 ### Go install
 
 ```sh
@@ -54,6 +60,7 @@ Look up an IP address against the SikkerAPI threat intelligence database.
 sikker check 8.8.8.8
 sikker check 1.2.3.4 --max-age 30 --protocols ssh,http
 sikker check 1.2.3.4 --json
+sikker check 1.2.3.4 --fail-above 50 || block_ip 1.2.3.4
 ```
 
 | Flag | Description |
@@ -63,6 +70,7 @@ sikker check 1.2.3.4 --json
 | `--protocols` | Comma-separated protocol filter |
 | `--exclude` | Fields to exclude from response |
 | `--ignore-whitelist` | Ignore whitelist filtering |
+| `--fail-above` | Exit with code 1 if confidence >= this value |
 | `--json` | Output raw JSON |
 
 ### `sikker blacklist`

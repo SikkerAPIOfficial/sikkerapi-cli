@@ -111,7 +111,7 @@ func (c *Client) do(req *http.Request) ([]byte, int, http.Header, error) {
 		retryAfter := resp.Header.Get("Retry-After")
 		if retryAfter != "" {
 			if secs, err := strconv.Atoi(retryAfter); err == nil {
-				return body, 429, resp.Header, fmt.Errorf("rate limited — try again in %ds", secs)
+				return body, 429, resp.Header, fmt.Errorf("daily quota exceeded — resets in %s", formatDuration(secs))
 			}
 		}
 		return body, 429, resp.Header, fmt.Errorf("rate limited — try again later")
@@ -140,6 +140,22 @@ func RequireKey(cfg *config.Config) {
 		fmt.Fprintln(os.Stderr, "Or set the SIKKERAPI_KEY environment variable.")
 		os.Exit(1)
 	}
+}
+
+// formatDuration converts seconds into a human-readable duration like "16h 11m".
+func formatDuration(totalSeconds int) string {
+	hours := totalSeconds / 3600
+	minutes := (totalSeconds % 3600) / 60
+	if hours > 0 && minutes > 0 {
+		return fmt.Sprintf("%dh %dm", hours, minutes)
+	}
+	if hours > 0 {
+		return fmt.Sprintf("%dh", hours)
+	}
+	if minutes > 0 {
+		return fmt.Sprintf("%dm", minutes)
+	}
+	return fmt.Sprintf("%ds", totalSeconds)
 }
 
 // BuildQuery builds a query string from key-value pairs, skipping empty values.

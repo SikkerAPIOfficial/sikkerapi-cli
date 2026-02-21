@@ -13,12 +13,18 @@ const (
 	configFile     = "config.json"
 )
 
+// configPath can be overridden in tests.
+var configPath string
+
 type Config struct {
 	APIKey  string `json:"api_key"`
 	BaseURL string `json:"base_url,omitempty"`
 }
 
-func configPath() (string, error) {
+func getConfigPath() (string, error) {
+	if configPath != "" {
+		return configPath, nil
+	}
 	home, err := os.UserHomeDir()
 	if err != nil {
 		return "", fmt.Errorf("cannot determine home directory: %w", err)
@@ -37,7 +43,7 @@ func Load() (*Config, error) {
 		cfg.BaseURL = url
 	}
 
-	path, err := configPath()
+	path, err := getConfigPath()
 	if err != nil {
 		return cfg, nil
 	}
@@ -65,7 +71,7 @@ func Load() (*Config, error) {
 }
 
 func Save(cfg *Config) error {
-	path, err := configPath()
+	path, err := getConfigPath()
 	if err != nil {
 		return err
 	}

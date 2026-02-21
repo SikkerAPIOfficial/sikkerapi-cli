@@ -69,7 +69,7 @@ Examples:
 
 			path := fmt.Sprintf("/taxii2/collections/%s/objects/", collection)
 			c := client.New(cfg)
-			body, status, err := c.Get(path + client.BuildQuery(params))
+			body, status, headers, err := c.Get(path + client.BuildQuery(params))
 			if err != nil {
 				output.Errorf("Error: %s", err)
 				return err
@@ -86,6 +86,7 @@ Examples:
 			}
 
 			printTaxiiBundle(body)
+			output.PrintRateLimit(headers, "taxii")
 			return nil
 		},
 	}
@@ -126,7 +127,7 @@ Examples:
 			path := fmt.Sprintf("/taxii2/collections/%s/objects/%s/", collection, ip)
 
 			c := client.New(cfg)
-			body, status, err := c.Get(path)
+			body, status, headers, err := c.Get(path)
 			if err != nil {
 				output.Errorf("Error: %s", err)
 				return err
@@ -143,6 +144,7 @@ Examples:
 			}
 
 			printStixObject(body)
+			output.PrintRateLimit(headers, "taxii")
 			return nil
 		},
 	}

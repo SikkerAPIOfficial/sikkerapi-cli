@@ -55,6 +55,9 @@ type checkPrimitive struct {
 	Description *string `json:"description"`
 }
 
+// ErrAboveThreshold is returned when --fail-above threshold is exceeded.
+var ErrAboveThreshold = fmt.Errorf("confidence above threshold")
+
 func newCheckCmd() *cobra.Command {
 	var (
 		maxAge          int
@@ -63,6 +66,7 @@ func newCheckCmd() *cobra.Command {
 		exclude         string
 		ignoreWhitelist bool
 		jsonOutput      bool
+		failAbove       int
 	)
 
 	cmd := &cobra.Command{
@@ -73,7 +77,8 @@ func newCheckCmd() *cobra.Command {
 Examples:
   sikker check 8.8.8.8
   sikker check 1.2.3.4 --max-age 30 --protocols ssh,http
-  sikker check 1.2.3.4 --json`,
+  sikker check 1.2.3.4 --json
+  sikker check 1.2.3.4 --fail-above 50 || block_ip 1.2.3.4`,
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cfg, err := config.Load()
@@ -102,7 +107,7 @@ Examples:
 			}
 
 			c := client.New(cfg)
-			body, status, err := c.Get("/v1/key/check/" + ip + client.BuildQuery(params))
+			body, status, headers, err := c.Get("/v1/key/check/" + ip + client.BuildQuery(params))
 			if err != nil {
 				output.Errorf("Error: %s", err)
 				return err
@@ -125,6 +130,12 @@ Examples:
 			}
 
 			printCheckResult(&resp)
+			output.PrintRateLimit(headers, "ratelimit")
+
+			if failAbove > 0 && resp.ConfidenceLevel >= failAbove {
+				return ErrAboveThreshold
+			}
+
 			return nil
 		},
 	}
@@ -135,6 +146,7 @@ Examples:
 	cmd.Flags().StringVar(&exclude, "exclude", "", "Fields to exclude from response")
 	cmd.Flags().BoolVar(&ignoreWhitelist, "ignore-whitelist", false, "Ignore whitelist filtering")
 	cmd.Flags().BoolVar(&jsonOutput, "json", false, "Output raw JSON")
+	cmd.Flags().IntVar(&failAbove, "fail-above", 0, "Exit with code 1 if confidence >= this value")
 
 	return cmd
 }

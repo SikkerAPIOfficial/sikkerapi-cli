@@ -70,7 +70,7 @@ Examples:
 			}
 
 			c := client.New(cfg)
-			respBody, status, err := c.Post("/v1/key/report", body)
+			respBody, status, headers, err := c.Post("/v1/key/report", body)
 			if err != nil {
 				output.Errorf("Error: %s", err)
 				return err
@@ -94,6 +94,7 @@ Examples:
 
 			if resp.Success {
 				output.Success(fmt.Sprintf("Report submitted for %s (category: %s)", args[0], category))
+				output.PrintRateLimit(headers, "report")
 			} else {
 				output.Errorf("Report rejected: %s", resp.Error)
 				return fmt.Errorf("report rejected")

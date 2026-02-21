@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -102,6 +104,48 @@ func FormatEpochAgo(epochMs int64) string {
 	default:
 		return t.Format("Jan 02, 2006")
 	}
+}
+
+// PrintRateLimit prints a dim quota line based on response headers.
+// kind: "ratelimit" (check/blacklist), "report" (report/bulk-report), "taxii" (taxii)
+func PrintRateLimit(headers http.Header, kind string) {
+	var remaining, limit string
+
+	switch kind {
+	case "ratelimit":
+		remaining = headers.Get("X-RateLimit-Remaining")
+		limit = headers.Get("X-RateLimit-Limit")
+	case "report":
+		remaining = headers.Get("X-Report-Remaining")
+		limit = headers.Get("X-Report-Limit")
+	case "taxii":
+		remaining = headers.Get("X-TAXII-Remaining")
+		limit = headers.Get("X-TAXII-Limit")
+	}
+
+	if remaining == "" || limit == "" {
+		return
+	}
+
+	line := fmt.Sprintf("  Quota: %s / %s remaining", remaining, limit)
+
+	if kind == "ratelimit" {
+		if resetStr := headers.Get("X-RateLimit-Reset"); resetStr != "" {
+			if resetUnix, err := strconv.ParseInt(resetStr, 10, 64); err == nil {
+				resetTime := time.Unix(resetUnix, 0)
+				diff := time.Until(resetTime)
+				if diff > 0 {
+					if diff < time.Hour {
+						line += fmt.Sprintf(" (resets in %dm)", int(diff.Minutes()))
+					} else {
+						line += fmt.Sprintf(" (resets in %dh)", int(diff.Hours()))
+					}
+				}
+			}
+		}
+	}
+
+	Dim.Println(line)
 }
 
 // PadRight pads a string to a fixed width.

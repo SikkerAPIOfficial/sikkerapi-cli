@@ -104,7 +104,7 @@ Examples:
 			}
 
 			c := client.New(cfg)
-			body, status, err := c.Get("/v1/key/blacklist" + client.BuildQuery(params))
+			body, status, headers, err := c.Get("/v1/key/blacklist" + client.BuildQuery(params))
 			if err != nil {
 				output.Errorf("Error: %s", err)
 				return err
@@ -133,6 +133,7 @@ Examples:
 			}
 
 			printBlacklistResult(&resp)
+			output.PrintRateLimit(headers, "ratelimit")
 			return nil
 		},
 	}

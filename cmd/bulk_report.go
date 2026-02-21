@@ -3,6 +3,7 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"strings"
 
@@ -70,6 +71,7 @@ Examples:
 			c := client.New(cfg)
 			var respBody []byte
 			var status int
+			var headers http.Header
 
 			if strings.HasSuffix(strings.ToLower(filePath), ".json") {
 				// JSON file — read and POST as application/json
@@ -78,14 +80,14 @@ Examples:
 					output.Errorf("Cannot read file: %s", err)
 					return err
 				}
-				respBody, status, err = c.Post("/v1/key/bulk-report", data)
+				respBody, status, headers, err = c.Post("/v1/key/bulk-report", data)
 				if err != nil {
 					output.Errorf("Error: %s", err)
 					return err
 				}
 			} else {
 				// CSV file — upload as multipart/form-data
-				respBody, status, err = c.PostMultipart("/v1/key/bulk-report", "file", filePath)
+				respBody, status, headers, err = c.PostMultipart("/v1/key/bulk-report", "file", filePath)
 				if err != nil {
 					output.Errorf("Error: %s", err)
 					return err
@@ -109,6 +111,7 @@ Examples:
 			}
 
 			printBulkReportResult(&resp)
+			output.PrintRateLimit(headers, "report")
 			return nil
 		},
 	}

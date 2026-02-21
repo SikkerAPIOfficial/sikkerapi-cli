@@ -35,6 +35,14 @@ changelog:
       - "^test:"
       - "^ci:"
 
+brews:
+  - repository:
+      owner: sikkerapi
+      name: homebrew-tap
+    homepage: "https://sikkerapi.com"
+    description: "CLI for SikkerAPI — IP reputation, blacklists, abuse reports, and TAXII feeds"
+    license: "MIT"
+
 release:
   github:
     owner: sikkerapi

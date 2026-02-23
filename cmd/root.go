@@ -31,6 +31,7 @@ Get started:
 	rootCmd.AddCommand(newReportCmd())
 	rootCmd.AddCommand(newBulkReportCmd())
 	rootCmd.AddCommand(newTaxiiCmd())
+	rootCmd.AddCommand(newUsernameCmd())
 
 	return rootCmd
 }

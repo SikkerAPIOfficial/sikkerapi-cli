@@ -6,6 +6,16 @@ INSTALL_DIR="/usr/local/bin"
 BINARY="sikker"
 
 main() {
+    # Recommend npm if available
+    if command -v npm > /dev/null 2>&1; then
+        echo "npm detected. You can also install via:"
+        echo ""
+        echo "  npm install -g @sikkerapi/cli"
+        echo ""
+        echo "Continuing with direct binary install..."
+        echo ""
+    fi
+
     OS=$(uname -s | tr '[:upper:]' '[:lower:]')
     ARCH=$(uname -m)
 

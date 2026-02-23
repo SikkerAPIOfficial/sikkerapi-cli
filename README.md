@@ -1,7 +1,6 @@
 # sikker
 
-[![Release](https://img.shields.io/github/v/release/sikkerapi/sikker-cli)](https://github.com/sikkerapi/sikker-cli/releases)
-[![Go Report Card](https://goreportcard.com/badge/github.com/sikkerapi/sikker-cli)](https://goreportcard.com/report/github.com/sikkerapi/sikker-cli)
+[![npm](https://img.shields.io/npm/v/@sikkerapi/cli)](https://www.npmjs.com/package/@sikkerapi/cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 The official CLI for [SikkerAPI](https://sikkerapi.com) — IP reputation, blacklists, abuse reports, and TAXII/STIX feeds from your terminal.
@@ -10,40 +9,17 @@ The official CLI for [SikkerAPI](https://sikkerapi.com) — IP reputation, black
 
 ## Install
 
-### Quick install (Linux / macOS)
-
 ```sh
-curl -sSL https://raw.githubusercontent.com/sikkerapi/sikker-cli/main/scripts/install.sh | sh
+npm install -g @sikkerapi/cli
 ```
 
-### Homebrew (macOS / Linux)
+Pre-built binaries for Linux, macOS, and Windows (x64 + arm64). No build tools required.
+
+Or run without installing:
 
 ```sh
-brew install sikkerapi/tap/sikker
+npx @sikkerapi/cli check 1.2.3.4
 ```
-
-### Go install
-
-```sh
-go install github.com/sikkerapi/sikker-cli@latest
-```
-
-> **Note:** `go install` names the binary `sikker-cli` (after the module name).
-> To use it as `sikker`, create an alias or symlink:
->
-> ```sh
-> # Symlink (permanent)
-> ln -s $(go env GOPATH)/bin/sikker-cli $(go env GOPATH)/bin/sikker
->
-> # Or add a shell alias to your ~/.bashrc or ~/.zshrc
-> alias sikker='sikker-cli'
-> ```
-
-### GitHub Releases
-
-Download pre-built binaries from [Releases](https://github.com/sikkerapi/sikker-cli/releases).
-
-Available for Linux, macOS, and Windows (amd64 + arm64).
 
 ## Quick start
 

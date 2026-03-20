@@ -143,7 +143,7 @@ Examples:
 				return fmt.Errorf("API error %d", status)
 			}
 
-			printStixObject(body)
+			printTaxiiBundle(body)
 			output.PrintRateLimit(headers, "taxii")
 			return nil
 		},
@@ -221,61 +221,6 @@ func printTaxiiBundle(data []byte) {
 		}
 
 		fmt.Println()
-	}
-}
-
-// printStixObject prints a human-readable summary of a single STIX object.
-func printStixObject(data []byte) {
-	var m map[string]interface{}
-	if err := json.Unmarshal(data, &m); err != nil {
-		output.PrintJSON(data)
-		return
-	}
-
-	stixType := getString(m, "type")
-	stixID := getString(m, "id")
-	name := getString(m, "name")
-	created := getString(m, "created")
-	modified := getString(m, "modified")
-	description := getString(m, "description")
-
-	output.Bold.Printf("%s", stixType)
-	if name != "" {
-		fmt.Printf(" — %s", name)
-	}
-	fmt.Println()
-
-	output.Dim.Print("  ID:       ")
-	fmt.Println(stixID)
-
-	if created != "" {
-		output.Dim.Print("  Created:  ")
-		fmt.Println(output.FormatTimeAgo(created))
-	}
-	if modified != "" {
-		output.Dim.Print("  Modified: ")
-		fmt.Println(output.FormatTimeAgo(modified))
-	}
-
-	if pattern := getString(m, "pattern"); pattern != "" {
-		output.Dim.Print("  Pattern:  ")
-		fmt.Println(pattern)
-	}
-
-	if labels, ok := m["labels"].([]interface{}); ok && len(labels) > 0 {
-		var labelStrs []string
-		for _, l := range labels {
-			if s, ok := l.(string); ok {
-				labelStrs = append(labelStrs, s)
-			}
-		}
-		output.Dim.Print("  Labels:   ")
-		fmt.Println(strings.Join(labelStrs, ", "))
-	}
-
-	if description != "" {
-		output.Dim.Print("  Desc:     ")
-		fmt.Println(description)
 	}
 }
 

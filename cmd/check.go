@@ -225,21 +225,31 @@ func printCheckResult(r *checkResponse) {
 
 	// Behaviors
 	if len(r.Behaviors) > 0 {
-		output.Dim.Print("  Behaviors: ")
-		var behavStrs []string
+		output.Dim.Println("  Behaviors:")
 		for _, b := range r.Behaviors {
-			behavStrs = append(behavStrs, fmt.Sprintf("%s (%s, %d)", b.Name, b.Severity, b.Count))
+			fmt.Print("    ")
+			fmt.Printf("%-60s", b.Name)
+			switch b.Severity {
+			case "very_high":
+				output.Red.Printf("%-10s", b.Severity)
+			case "high":
+				output.Yellow.Printf("%-10s", b.Severity)
+			case "medium":
+				output.Yellow.Printf("%-10s", b.Severity)
+			default:
+				output.Dim.Printf("%-10s", b.Severity)
+			}
+			output.Dim.Printf(" ×%d\n", b.Count)
 		}
-		fmt.Println(strings.Join(behavStrs, " · "))
 	}
 
 	// Primitives
 	if len(r.Primitives) > 0 {
-		output.Dim.Print("  Primitives:")
-		var primStrs []string
+		output.Dim.Println("  Primitives:")
 		for _, p := range r.Primitives {
-			primStrs = append(primStrs, fmt.Sprintf("%s (%d)", p.Name, p.Count))
+			fmt.Print("    ")
+			fmt.Printf("%-60s", p.Name)
+			output.Dim.Printf("×%d\n", p.Count)
 		}
-		fmt.Printf(" %s\n", strings.Join(primStrs, " · "))
 	}
 }

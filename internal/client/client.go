@@ -58,6 +58,29 @@ func (c *Client) Post(path string, body []byte) ([]byte, int, http.Header, error
 	return c.do(req)
 }
 
+// Delete performs a DELETE request.
+func (c *Client) Delete(path string) ([]byte, int, http.Header, error) {
+	url := c.cfg.BaseURL + path
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return nil, 0, nil, err
+	}
+	c.setHeaders(req)
+	return c.do(req)
+}
+
+// PostText performs a POST request with a plain text body.
+func (c *Client) PostText(path string, body []byte) ([]byte, int, http.Header, error) {
+	url := c.cfg.BaseURL + path
+	req, err := http.NewRequest("POST", url, bytes.NewReader(body))
+	if err != nil {
+		return nil, 0, nil, err
+	}
+	req.Header.Set("Content-Type", "text/plain")
+	c.setHeaders(req)
+	return c.do(req)
+}
+
 // PostMultipart uploads a file as multipart/form-data.
 func (c *Client) PostMultipart(path string, fieldName string, filePath string) ([]byte, int, http.Header, error) {
 	file, err := os.Open(filePath)

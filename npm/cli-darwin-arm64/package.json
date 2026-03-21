@@ -1,0 +1,17 @@
+{
+  "name": "@sikkerapi/cli-darwin-arm64",
+  "version": "0.2.6",
+  "description": "macOS arm64 binary for @sikkerapi/cli",
+  "license": "MIT",
+  "homepage": "https://sikkerapi.com/docs/cli",
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "files": [
+    "bin/"
+  ],
+  "preferUnplugged": true
+}

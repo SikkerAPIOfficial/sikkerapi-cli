@@ -225,10 +225,19 @@ func printCheckResult(r *checkResponse) {
 
 	// Behaviors
 	if len(r.Behaviors) > 0 {
+		// Find max name length for alignment
+		maxBehaviorLen := 0
+		for _, b := range r.Behaviors {
+			if len(b.Name) > maxBehaviorLen {
+				maxBehaviorLen = len(b.Name)
+			}
+		}
+		pad := maxBehaviorLen + 2
+
 		output.Dim.Println("  Behaviors:")
 		for _, b := range r.Behaviors {
 			fmt.Print("    ")
-			fmt.Printf("%-60s", b.Name)
+			fmt.Printf("%-*s", pad, b.Name)
 			switch b.Severity {
 			case "very_high":
 				output.Red.Printf("%-10s", b.Severity)
@@ -245,10 +254,18 @@ func printCheckResult(r *checkResponse) {
 
 	// Primitives
 	if len(r.Primitives) > 0 {
+		maxPrimLen := 0
+		for _, p := range r.Primitives {
+			if len(p.Name) > maxPrimLen {
+				maxPrimLen = len(p.Name)
+			}
+		}
+		pad := maxPrimLen + 2
+
 		output.Dim.Println("  Primitives:")
 		for _, p := range r.Primitives {
 			fmt.Print("    ")
-			fmt.Printf("%-60s", p.Name)
+			fmt.Printf("%-*s", pad, p.Name)
 			output.Dim.Printf("×%d\n", p.Count)
 		}
 	}

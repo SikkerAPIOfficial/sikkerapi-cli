@@ -47,7 +47,7 @@ Examples:
 			username := args[0]
 
 			c := client.New(cfg)
-			body, status, _, err := c.Get("/v1/usernames/lookup/" + url.PathEscape(username))
+			body, status, _, err := c.Get("/v1/key/username/" + url.PathEscape(username))
 			if err != nil {
 				output.Errorf("Error: %s", err)
 				return err

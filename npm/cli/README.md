@@ -1,11 +1,17 @@
-# sikker
+<p align="center">
+  <a href="https://sikkerapi.com">
+    <img src="https://api.sikkerapi.com/images/5f84902c-b8b2-4426-8d95-46494c170e2b.svg" alt="SikkerAPI" width="200" />
+  </a>
+</p>
 
-[![npm](https://img.shields.io/npm/v/@sikkerapi/cli)](https://www.npmjs.com/package/@sikkerapi/cli)
+# @sikkerapi/cli
+
+[![npm version](https://img.shields.io/npm/v/@sikkerapi/cli)](https://www.npmjs.com/package/@sikkerapi/cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 The official CLI for [SikkerAPI](https://sikkerapi.com) — IP reputation, blacklists, abuse reports, threat alerts, and TAXII/STIX feeds from your terminal.
 
-**[Full documentation](https://sikkerapi.com/docs/cli)**
+**[Full documentation](https://sikkerapi.com/docs/cli)** | **[Get an API key](https://sikkerapi.com/register)**
 
 ## Install
 
@@ -13,13 +19,13 @@ The official CLI for [SikkerAPI](https://sikkerapi.com) — IP reputation, black
 npm install -g @sikkerapi/cli
 ```
 
-Pre-built binaries for Linux, macOS, and Windows (x64 + arm64). No build tools required.
-
 Or run without installing:
 
 ```sh
 npx @sikkerapi/cli check 1.2.3.4
 ```
+
+Supports Linux, macOS, and Windows on both x64 and arm64.
 
 ## Quick start
 
@@ -250,6 +256,14 @@ All alert commands support `-l, --label` to add a label and `--json` for raw JSO
 | `SIKKERAPI_KEY` | API key (overrides saved config) |
 | `SIKKERAPI_URL` | Base URL override (default: `https://api.sikkerapi.com`) |
 | `NO_COLOR` | Disable colored output |
+
+## What is SikkerAPI?
+
+[SikkerAPI](https://sikkerapi.com) is an IP threat intelligence platform powered by a global network of honeypots. We capture real attacker behavior across 15+ protocols (SSH, HTTP, FTP, SMTP, and more) and provide IP reputation scores, blacklists, and structured threat data via API.
+
+- [Documentation](https://sikkerapi.com/docs)
+- [Pricing](https://sikkerapi.com/pricing)
+- [Threat catalog](https://sikkerapi.com/threats)
 
 ## License
 

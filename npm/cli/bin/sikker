@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+
+"use strict";
+
+const { execFileSync } = require("child_process");
+const path = require("path");
+
+const PLATFORMS = {
+  "linux-x64": "@sikkerapi/cli-linux-x64",
+  "linux-arm64": "@sikkerapi/cli-linux-arm64",
+  "darwin-x64": "@sikkerapi/cli-darwin-x64",
+  "darwin-arm64": "@sikkerapi/cli-darwin-arm64",
+  "win32-x64": "@sikkerapi/cli-win32-x64",
+  "win32-arm64": "@sikkerapi/cli-win32-arm64",
+};
+
+function getBinaryPath() {
+  const key = `${process.platform}-${process.arch}`;
+  const pkg = PLATFORMS[key];
+
+  if (!pkg) {
+    console.error(`Unsupported platform: ${process.platform}/${process.arch}`);
+    console.error(`Supported: ${Object.keys(PLATFORMS).join(", ")}`);
+    console.error(`\nInstall manually: https://sikkerapi.com/docs/cli`);
+    process.exit(1);
+  }
+
+  const binaryName = process.platform === "win32" ? "sikker.exe" : "sikker";
+
+  try {
+    const pkgPath = require.resolve(`${pkg}/package.json`);
+    return path.join(path.dirname(pkgPath), "bin", binaryName);
+  } catch (e) {
+    console.error(`Platform package ${pkg} is not installed.`);
+    console.error(`Try reinstalling: npm install -g @sikkerapi/cli`);
+    console.error(`\nOr install manually: https://sikkerapi.com/docs/cli`);
+    process.exit(1);
+  }
+}
+
+const binaryPath = getBinaryPath();
+
+try {
+  execFileSync(binaryPath, process.argv.slice(2), { stdio: "inherit" });
+} catch (e) {
+  if (e.status !== null) {
+    process.exit(e.status);
+  }
+  if (e.signal) {
+    process.exit(1);
+  }
+  throw e;
+}

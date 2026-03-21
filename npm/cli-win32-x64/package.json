@@ -1,0 +1,17 @@
+{
+  "name": "@sikkerapi/cli-win32-x64",
+  "version": "0.2.6",
+  "description": "Windows x64 binary for @sikkerapi/cli",
+  "license": "MIT",
+  "homepage": "https://sikkerapi.com/docs/cli",
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "files": [
+    "bin/"
+  ],
+  "preferUnplugged": true
+}

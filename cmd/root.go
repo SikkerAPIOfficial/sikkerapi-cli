@@ -32,6 +32,12 @@ Get started:
 	rootCmd.AddCommand(newBulkReportCmd())
 	rootCmd.AddCommand(newTaxiiCmd())
 	rootCmd.AddCommand(newUsernameCmd())
+	rootCmd.AddCommand(newEmailCmd())
+	rootCmd.AddCommand(newBulkCheckCmd())
+	rootCmd.AddCommand(newIpAlertCmd())
+	rootCmd.AddCommand(newCidrAlertCmd())
+	rootCmd.AddCommand(newUsernameAlertCmd())
+	rootCmd.AddCommand(newEmailAlertCmd())
 
 	return rootCmd
 }

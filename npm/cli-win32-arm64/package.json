@@ -1,6 +1,6 @@
 {
   "name": "@sikkerapi/cli-win32-arm64",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "Windows arm64 binary for @sikkerapi/cli",
   "license": "MIT",
   "homepage": "https://sikkerapi.com/docs/cli",

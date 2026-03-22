@@ -38,6 +38,7 @@ Get started:
 	rootCmd.AddCommand(newCidrAlertCmd())
 	rootCmd.AddCommand(newUsernameAlertCmd())
 	rootCmd.AddCommand(newEmailAlertCmd())
+	rootCmd.AddCommand(newStatusCmd())
 
 	return rootCmd
 }

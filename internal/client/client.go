@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"mime/multipart"
@@ -131,11 +132,18 @@ func (c *Client) do(req *http.Request) ([]byte, int, http.Header, error) {
 	}
 
 	if resp.StatusCode == 429 {
-		retryAfter := resp.Header.Get("Retry-After")
-		if retryAfter != "" {
-			if secs, err := strconv.Atoi(retryAfter); err == nil {
-				return body, 429, resp.Header, fmt.Errorf("daily quota exceeded — resets in %s", formatDuration(secs))
+		// Parse error message from response body
+		var errMsg struct {
+			Error string `json:"error"`
+		}
+		if json.Unmarshal(body, &errMsg) == nil && errMsg.Error != "" {
+			retryAfter := resp.Header.Get("Retry-After")
+			if retryAfter != "" {
+				if secs, err := strconv.Atoi(retryAfter); err == nil {
+					return body, 429, resp.Header, fmt.Errorf("%s (resets in %s)", errMsg.Error, formatDuration(secs))
+				}
 			}
+			return body, 429, resp.Header, fmt.Errorf("%s", errMsg.Error)
 		}
 		return body, 429, resp.Header, fmt.Errorf("rate limited — try again later")
 	}

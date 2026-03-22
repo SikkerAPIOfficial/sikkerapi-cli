@@ -1,6 +1,6 @@
 {
   "name": "@sikkerapi/cli",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "CLI for SikkerAPI — IP reputation, blacklists, abuse reports, and TAXII feeds",
   "license": "MIT",
   "homepage": "https://sikkerapi.com/docs/cli",
@@ -11,12 +11,12 @@
     "bin/"
   ],
   "optionalDependencies": {
-    "@sikkerapi/cli-linux-x64": "0.2.6",
-    "@sikkerapi/cli-linux-arm64": "0.2.6",
-    "@sikkerapi/cli-darwin-x64": "0.2.6",
-    "@sikkerapi/cli-darwin-arm64": "0.2.6",
-    "@sikkerapi/cli-win32-x64": "0.2.6",
-    "@sikkerapi/cli-win32-arm64": "0.2.6"
+    "@sikkerapi/cli-linux-x64": "0.3.0",
+    "@sikkerapi/cli-linux-arm64": "0.3.0",
+    "@sikkerapi/cli-darwin-x64": "0.3.0",
+    "@sikkerapi/cli-darwin-arm64": "0.3.0",
+    "@sikkerapi/cli-win32-x64": "0.3.0",
+    "@sikkerapi/cli-win32-arm64": "0.3.0"
   },
   "engines": {
     "node": ">=14"
